@@ -1,5 +1,5 @@
-# Phoenix-Clothing
+# Face Detection Web Application
 Built with React.js
 
 ## About
-This hobby project is a web appication that detects where a face is located in a given image.
+This hobby project is a web application that detects where a face is located in a given image.
