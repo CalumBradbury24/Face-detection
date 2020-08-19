@@ -27,11 +27,10 @@ const options = {
 
 const App = () => {
   const [input, setInput] = useState("");
-  const [imageUrl, setImageUrl] = useState(
-    "https://samples.clarifai.com/metro-north.jpg"
-  );
+  const [imageUrl, setImageUrl] = useState("");
   const [box, setBox] = useState({});
   const [route, setRoute] = useState("signin");
+  const [isSignedIn, setSignedInStatus] = useState(false);
 
   const calculateFaceLocation = (boundingBoxData) => {
     const clarifaiFace =
@@ -64,13 +63,18 @@ const App = () => {
   };
 
   const onRouteChange = (route) => {
+    if (route === 'signout') {
+      setSignedInStatus(false);
+    } else if (route === 'home') {
+      setSignedInStatus(true);
+    }
     setRoute(route);
   };
 
   return (
     <div className="App">
       <Particles className="particles" params={options} />
-      <Navigation onRouteChange={onRouteChange} route={route} />
+      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
       {route === "home" ? (
         <div>
           <Logo />
@@ -84,7 +88,7 @@ const App = () => {
       ) : route === "signin" ? (
         <SignIn onRouteChange={onRouteChange} />
       ) : (
-        <Register onRouteChange={onRouteChange}/>
+        <Register onRouteChange={onRouteChange} />
       )}
     </div>
   );
