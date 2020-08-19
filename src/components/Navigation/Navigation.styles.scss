@@ -1,0 +1,11 @@
+.Navigation{
+    display: flex;
+    justify-content: flex-end;
+   
+    width: 100%;
+    .link{
+        text-decoration: underline;
+        padding-right: 25px;
+        cursor: pointer;
+    }
+}
