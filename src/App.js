@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/image-link-form/image-link-form";
-import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
-import SignIn from "./components/SignInForm/SignIn";
-import Register from "./components/Register/Register";
 
 import Clarifai from "clarifai";
 import Particles from "react-particles-js";
 import "./App.css";
 
 const app = new Clarifai.App({ apiKey: "e53f5684461a45728201ae16aa2d2468" });
-
 const options = {
   particles: {
     number: {
@@ -29,8 +24,7 @@ const App = () => {
   const [input, setInput] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [box, setBox] = useState({});
-  const [route, setRoute] = useState("signin");
-  const [isSignedIn, setSignedInStatus] = useState(false);
+
 
   const calculateFaceLocation = (boundingBoxData) => {
     const clarifaiFace =
@@ -62,34 +56,17 @@ const App = () => {
       .catch((err) => console.log(err));
   };
 
-  const onRouteChange = (route) => {
-    if (route === 'signout') {
-      setSignedInStatus(false);
-    } else if (route === 'home') {
-      setSignedInStatus(true);
-    }
-    setRoute(route);
-  };
-
   return (
     <div className="App">
       <Particles className="particles" params={options} />
-      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
-      {route === "home" ? (
         <div>
           <Logo />
           <ImageLinkForm
-            onInputChange={onInputChange}
+          onInputChange={onInputChange}
             onButtonSubmit={onButtonSubmit}
           />
-          <Rank />
           <FaceRecognition box={box} imageUrl={imageUrl} />
         </div>
-      ) : route === "signin" ? (
-        <SignIn onRouteChange={onRouteChange} />
-      ) : (
-        <Register onRouteChange={onRouteChange} />
-      )}
     </div>
   );
 };
